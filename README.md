@@ -94,6 +94,21 @@ This project uses GitHub Actions for continuous integration. Workflows include:
 
 You can view the passing CI tests in the [GitHub Actions tab](https://github.com/nagendrachaudhary99/Sentiment-Analysis/actions).
 
+### Testing CI/CD Locally
+
+You can test the CI pipeline locally by running:
+
+```bash
+# Install test dependencies
+pip install pytest httpx
+
+# Run tests
+python -m pytest
+
+# Check documentation build
+cd docs && mkdocs build
+```
+
 ## Technologies Used
 
 - FastAPI
