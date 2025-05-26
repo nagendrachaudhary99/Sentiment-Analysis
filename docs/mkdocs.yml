@@ -1,0 +1,8 @@
+site_name: Sentiment Analysis Project
+site_description: Documentation for the Sentiment Analysis project
+theme: readthedocs
+
+nav:
+  - Home: index.md
+  - Setup: setup.md
+  - Usage: usage.md 

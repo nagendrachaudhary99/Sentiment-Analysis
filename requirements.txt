@@ -1,0 +1,7 @@
+fastapi>=0.95.0
+transformers>=4.27.0
+uvicorn>=0.21.0
+mkdocs>=1.4.2
+numpy>=1.24.0
+torch>=2.0.0
+pydantic>=1.10.0 

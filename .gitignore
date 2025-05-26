@@ -1,0 +1,68 @@
+# Virtual Environment
+/venv310/
+/.venv/
+/env/
+/venv/
+venv310/
+.venv/
+env/
+venv/
+**/venv310/**
+**/.venv/**
+**/env/**
+**/venv/**
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Hugging Face cache
+.hf_cache/
+**/.hf_cache/**
+
+# macOS
+.DS_Store
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Large files
+*.dylib
+*.so
+**/*.dylib
+**/*.so
+**/*.pyd
+**/__pycache__/
+**/torch/lib/*.dylib
+**/torch/lib/*.so
+**/torch/lib/libtorch*
+
+# Explicitly ignore these large files
+**/torch/lib/libtorch_cpu.dylib
+**/torch/lib/libtorch.dylib
+**/torch/lib/*.dylib
+**/torch/lib/*.so 
