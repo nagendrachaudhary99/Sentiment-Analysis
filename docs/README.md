@@ -1,10 +1,16 @@
-# Documentation for Sentiment Analysis Project
+# Sentiment Analysis Project Documentation
 
 This directory contains the MkDocs-based documentation for the Sentiment Analysis project.
 
-## Setting Up and Serving MkDocs Documentation
+## 📚 Documentation Structure
 
-To set up and serve the documentation:
+- `mkdocs.yml`: Configuration file for MkDocs
+- `docs/`: Directory containing the markdown files
+  - `index.md`: Home page
+  - `setup.md`: Setup instructions
+  - `usage.md`: Usage instructions
+
+## 🚀 Setting Up and Serving Documentation
 
 ```bash
 # Navigate to the docs directory (if not already there)
@@ -22,30 +28,15 @@ mkdocs serve
 
 The documentation will be available at `http://127.0.0.1:8000/`.
 
-## Documentation Structure
-
-- `mkdocs.yml`: Configuration file for MkDocs
-- `docs/`: Directory containing the markdown files
-  - `index.md`: Home page
-  - `setup.md`: Setup instructions
-  - `usage.md`: Usage instructions
-
-## Updating Documentation
+## ✏️ Updating Documentation
 
 1. Edit the markdown files in the `docs/` directory
 2. Run `mkdocs serve` to preview changes
 3. Run `mkdocs build` to build the final documentation site
 
-## Project Setup Commands
+## 📋 Project Setup Commands Reference
 
-### Python & Transformers
-
-```bash
-# Verified Transformers is installed and importable
-python -c "from transformers import pipeline; print('Transformers is OK')"
-```
-
-### Virtual Environment
+### Python Environment
 
 ```bash
 # Create a virtual environment
@@ -53,128 +44,147 @@ python -m venv venv310
 
 # Activate the environment
 source venv310/bin/activate
+
+# Verify Transformers installation
+python -c "from transformers import pipeline; print('Transformers is OK')"
 ```
 
-### FastAPI and other packages
+### Package Installation
 
 ```bash
-# Install FastAPI
-pip install fastapi
+# Install required packages
+pip install fastapi transformers uvicorn mkdocs
 
-# Install cookiecutter
-pip install cookiecutter
-
-# Install cookiecutter data science template
-pip install cookiecutter-data-science
+# Alternative: Install all requirements at once
+pip install -r requirements.txt
 ```
 
-### MkDocs setup
+### Hugging Face Cache Configuration
 
 ```bash
-# Inside 'docs' directory
-pip install mkdocs
-
-# Build documentation site
-mkdocs build
-
-# Serve documentation locally
-mkdocs serve
+# Set a custom cache directory to prevent space errors
+export TRANSFORMERS_CACHE=$(pwd)/.hf_cache
+mkdir -p .hf_cache
 ```
 
-### Hugging Face Cache Fixes
+### Running the Application
 
 ```bash
-# Remove default Hugging Face cache to prevent space errors
+# Start the FastAPI server
+uvicorn app:app --port 5000
+```
+
+## 🔗 Useful Links
+
+- GitHub Repository: [https://github.com/nagendrachaudhary99/Sentiment-Analysis](https://github.com/nagendrachaudhary99/Sentiment-Analysis)
+- FastAPI Documentation: [https://fastapi.tiangolo.com/](https://fastapi.tiangolo.com/)
+- MkDocs Documentation: [https://www.mkdocs.org/](https://www.mkdocs.org/)
+- Hugging Face Transformers: [https://huggingface.co/docs/transformers/](https://huggingface.co/docs/transformers/)
+
+## ⚠️ Troubleshooting Common Issues
+
+### Hugging Face Cache Errors
+
+When downloading models from Hugging Face, you might encounter disk space errors or permission issues:
+
+```bash
+# Error: No space left on device or permission errors when downloading models
+
+# Solution 1: Clear the default cache
 rm -rf ~/.cache/huggingface
 
-# Set a new cache directory (temporary)
-export TRANSFORMERS_CACHE=/Users/nagendrachaudhary/Desktop/sentiment/.hf_cache
-
-# Create the new cache directory
-mkdir -p /Users/nagendrachaudhary/Desktop/sentiment/.hf_cache
+# Solution 2: Set a custom cache location in your project directory
+export TRANSFORMERS_CACHE=$(pwd)/.hf_cache
+mkdir -p .hf_cache
 ```
 
-### Uvicorn FastAPI server
+### Large Files with Git
+
+When pushing to GitHub, you might encounter issues with large files:
 
 ```bash
-# Run your FastAPI app
-uvicorn app:app --port 5000
-``` 
-////////
-# 💬 Sentiment Analysis API with FastAPI & Transformers
+# Error: File exceeds GitHub's file size limit of 100MB
 
-This project provides a RESTful API for sentiment classification using Hugging Face's `SamLowe/roberta-base-go_emotions` model via FastAPI. It also includes MkDocs-based documentation for easy navigation and usage instructions.
+# Solution: Add large files to .gitignore before committing
+echo "venv310/" >> .gitignore
+echo "*.dylib" >> .gitignore
+echo "*.so" >> .gitignore
+echo "**/*.dylib" >> .gitignore
+echo "**/*.so" >> .gitignore
+echo "**/__pycache__/" >> .gitignore
+echo ".hf_cache/" >> .gitignore
 
----
+# If files are already tracked:
+git rm -r --cached venv310
+git rm -r --cached .hf_cache
+```
 
-## 🚀 Features
+### Model Loading Errors
 
-- 🔍 Classifies text into multiple emotion categories
-- ⚡ Built using FastAPI for high performance
-- 🤗 Uses Hugging Face Transformers pipeline
-- 📝 Fully documented with MkDocs
-
----
-
-## 📁 Project Structure
-sentiment/
-│
-├── app/ # FastAPI app directory
-│ └── init.py
-│
-├── docs/ # MkDocs documentation
-│ ├── index.md
-│ ├── setup.md
-│ └── usage.md
-│
-├── mkdocs.yml # MkDocs config
-├── README.md # This file
-└── requirements.txt # Python dependencies
-
-yaml:
-
----
-
-## ⚙️ Setup Instructions
-
-### 1. Clone the Repository
+If you encounter issues loading the model:
 
 ```bash
-git clone https://github.com/your-username/sentiment-api.git
-cd sentiment-api
+# Error: Model 'SamLowe/roberta-base-go_emotions' not found
 
-2. Create and Activate Virtual Environment
-python -m venv venv310
+# Solution: Check internet connection and try downloading explicitly
+python -c "from transformers import AutoTokenizer, AutoModelForSequenceClassification; tokenizer = AutoTokenizer.from_pretrained('SamLowe/roberta-base-go_emotions'); model = AutoModelForSequenceClassification.from_pretrained('SamLowe/roberta-base-go_emotions')"
+```
+
+### MkDocs Building Errors
+
+If MkDocs fails to build:
+
+```bash
+# Error: No such file or directory 'docs/docs'
+
+# Solution: Ensure you're in the correct directory structure
+# Your file structure should be:
+# sentiment/
+# ├── docs/
+# │   ├── mkdocs.yml
+# │   └── docs/
+# │       ├── index.md
+# │       ├── setup.md
+# │       └── usage.md
+
+# If you're getting this error, make sure you're running mkdocs commands from the directory containing mkdocs.yml
+```
+
+### Python Import Errors
+
+```bash
+# Error: No module named 'fastapi' or other import errors
+
+# Solution: Check that you've activated your virtual environment and installed all requirements
 source venv310/bin/activate
-
-3.Install Required Packages
-
 pip install -r requirements.txt
 
-Or manually:
+# Verify installation
+pip list | grep fastapi
+```
 
-pip install fastapi uvicorn transformers
+### Memory Errors When Loading Models
 
-Run the Api
-# Inside root directory
-uvicorn app:app --port 5000
+```bash
+# Error: CUDA out of memory or general memory errors
 
-API will be available at: http://127.0.0.1:5000
+# Solution: Use a smaller model or run on CPU only
+# Add this to your code:
+os.environ["CUDA_VISIBLE_DEVICES"] = ""  # Forces CPU-only mode
+```
 
-Swagger UI docs: http://127.0.0.1:5000/docs
+## 🔄 GitHub Workflow Tips
 
-Run MkDocs Documentation
-cd docs
-pip install mkdocs
-mkdocs serve
-Docs will be served at: http://127.0.0.1:8000
+When setting up a CI/CD workflow on GitHub, ensure:
 
-Troubleshooting: Hugging Face Cache Errors
-# Clear old cache
-rm -rf ~/.cache/huggingface
+1. Your `.github/workflows/ci.yml` file is properly configured
+2. Your tests don't require downloading large models during CI runs
+3. Your `.gitignore` file properly excludes virtual environments and large files
+4. You've set proper timeouts in case model downloads take too long
 
-# Create and point to a new one
-mkdir -p /Users/nagendrachaudhary/Desktop/sentiment/.hf_cache
-export TRANSFORMERS_CACHE=/Users/nagendrachaudhary/Desktop/sentiment/.hf_cach
+Example of force-pushing when needed:
+```bash
+git push -u origin main --force
+```
 
-Let me know if you want a `requirements.txt` generated too!
+Remember that force-pushing overwrites history, so use it carefully!
