@@ -71,12 +71,13 @@ The documentation will be available at http://127.0.0.1:8000/
 
 ## Demo
 
-[View the project demo here](https://drive.google.com/drive/folders/your-video-link) - Replace with your actual video link
+[View the project demo here](YOUR_GOOGLE_DRIVE_VIDEO_LINK) 
 
 The demo includes:
 - App running and processing sentiment analysis requests
 - Documentation navigation
 - Test execution
+- CI/CD workflow demonstration
 
 ## API Endpoints
 
